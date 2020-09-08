@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Box } from "@material-ui/core";
 
 import { Todo, RootState } from "../../../types/todoState";
-import TodoItem from "../TodoItem";
+import TodoItem from "./components/TodoItem";
 
 const TodoList = () => {
   const todos = useSelector((state: RootState) => state.todo.todos);

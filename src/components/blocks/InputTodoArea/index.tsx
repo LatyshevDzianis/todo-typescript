@@ -1,10 +1,15 @@
-import React, { MouseEvent, useState, ChangeEvent } from "react";
-import { Box, TextField, Button, Grid } from "@material-ui/core";
+import React, { useState, ChangeEvent } from "react";
+import { Box, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 
-import { TodoInput } from "../../../types/todoInput";
 import { addTodo } from "../../../actions/todo";
+import OutlinedTextField from "../../controls/OutlinedTextField";
+import AddTodoButton from "../../controls/AddTodoButton";
+
+interface TodoInput {
+  text: string
+}
 
 const useStyles = makeStyles({
   button: {
@@ -23,7 +28,7 @@ const InputTodoArea = () => {
     setTodoInput({ text: event.target.value });
   };
 
-  const handleAddClick = (event: MouseEvent): void => {
+  const handleAddClick = (): void => {
     if (todoInput.text.trim()) {
       dispatch(addTodo(todoInput.text.trim()));
       setTodoInput({
@@ -36,25 +41,23 @@ const InputTodoArea = () => {
     <Box m={3}>
       <Grid container spacing={2}>
         <Grid item md={9}>
-          <TextField
+          <OutlinedTextField
             label="Add your todo..."
-            variant="outlined"
             fullWidth={true}
             onChange={onInputChange}
             value={todoInput.text}
           />
         </Grid>
         <Grid item md={3}>
-          <Button
+          <AddTodoButton 
             variant="contained"
             color="primary"
             size="large"
             fullWidth={true}
-            className={classes.button}
+            style={classes.button}
             onClick={handleAddClick}
-          >
-            Add
-          </Button>
+            text="Add"
+          />
         </Grid>
       </Grid>
     </Box>

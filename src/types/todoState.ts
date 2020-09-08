@@ -9,7 +9,5 @@ export interface TodoState {
 }
 
 export interface RootState {
-  todo: {
-    todos: Todo[]
-  }
+  todo: TodoState
 }

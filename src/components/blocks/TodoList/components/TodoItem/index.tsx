@@ -2,19 +2,18 @@ import React, { MouseEvent, ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   Paper,
-  Checkbox,
   Typography,
   Grid,
-  IconButton,
   Popover,
-  TextField,
 } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { Todo } from "../../../types/todoState";
-import { removeTodo, toggleDone, editTodo } from "../../../actions/todo";
+import { Todo } from "../../../../../types/todoState";
+import { removeTodo, toggleDone, editTodo } from "../../../../../actions/todo";
+import DoneCheckBox from "../../../../controls/DoneCheckbox";
+import DeleteIconButton from '../../../../controls/DeleteIconButton';
+import EditIconButton from '../../../../controls/EditIconButton';
+import OutlinedTextField from "../../../../controls/OutlinedTextField";
 
 interface TodoItemProps {
   todo: Todo;
@@ -48,11 +47,11 @@ const TodoItem = (props: TodoItemProps) => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const onDeleteClick = (event: MouseEvent) => {
+  const onDeleteClick = () => {
     dispatch(removeTodo(props.todo.id));
   };
 
-  const handleToggleDone = (event: ChangeEvent) => {
+  const handleToggleDone = () => {
     dispatch(toggleDone(props.todo.id));
   };
 
@@ -73,12 +72,7 @@ const TodoItem = (props: TodoItemProps) => {
     <Paper elevation={5} square={true} className={classes.root}>
       <Grid container alignItems="center">
         <Grid item sm={1}>
-          <Checkbox
-            color="primary"
-            inputProps={{ "aria-label": "secondary checkbox" }}
-            checked={props.todo.done}
-            onChange={handleToggleDone}
-          />
+          <DoneCheckBox done={props.todo.done} handleToggleDone={handleToggleDone}/>
         </Grid>
         <Grid item sm={9}>
           <Typography
@@ -91,9 +85,7 @@ const TodoItem = (props: TodoItemProps) => {
         </Grid>
         <Grid item sm={2}>
           <div>
-            <IconButton onClick={handleClick}>
-              <EditIcon />
-            </IconButton>
+            <EditIconButton handleClick={handleClick}/>
             <Popover
               id={id}
               open={open}
@@ -108,19 +100,16 @@ const TodoItem = (props: TodoItemProps) => {
                 horizontal: "right",
               }}
             >
-              <TextField
-                className={classes.input}
-                size="small"
-                label="Change todo"
-                variant="outlined"
+              <OutlinedTextField
+                style={classes.input}
                 value={popoverInput}
+                handleEnterPress={handleEnterPress}
                 onChange={handleInputChange}
-                onKeyPress={handleEnterPress}
+                size="small"
+                label="Edit todo..."
               />
             </Popover>
-            <IconButton onClick={onDeleteClick}>
-              <DeleteForeverIcon />
-            </IconButton>
+            <DeleteIconButton onDeleteClick={onDeleteClick}/>
           </div>
         </Grid>
       </Grid>
