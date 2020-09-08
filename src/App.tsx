@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Provider } from "react-redux";
+import {
+  Container,
+  Card,
+  CardContent,
+} from "@material-ui/core";
 
-function App() {
+import store from "./store";
+import AppTitle from "./components/blocks/AppTitle";
+import InputTodoArea from './components/blocks/InputTodoArea';
+import TodoList from './components/blocks/TodoList';
+
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Container maxWidth="md">
+        <Card>
+          <CardContent>
+            <AppTitle/>
+            <InputTodoArea />
+            <TodoList />
+          </CardContent>
+        </Card>
+      </Container>
+    </Provider>
   );
-}
+};
 
 export default App;
