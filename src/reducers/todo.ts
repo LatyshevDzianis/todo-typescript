@@ -1,4 +1,9 @@
-import { ADD_TODO, REMOVE_TODO, EDIT_TODO, TOGGLE_DONE } from "../constants/actionTypes";
+import {
+  ADD_TODO,
+  REMOVE_TODO,
+  EDIT_TODO,
+  TOGGLE_DONE,
+} from "../constants/actionTypes";
 import { TodoState } from "../types/todoState";
 import { TodoActionTypes } from "../types/actions";
 
@@ -15,40 +20,38 @@ const reducer = (state: TodoState = initialState, action: TodoActionTypes) => {
           {
             id: Date.now(),
             text: action.payload,
-            done: false
+            done: false,
           },
         ],
       };
     }
     case REMOVE_TODO: {
       return {
-        todos: [
-          ...state.todos.filter(todo => todo.id !== action.payload)
-        ]
-      }
+        todos: [...state.todos.filter((todo) => todo.id !== action.payload)],
+      };
     }
     case EDIT_TODO: {
       return {
-        todos: state.todos.map(todo => {
+        todos: state.todos.map((todo) => {
           if (todo.id === action.payload.id) {
-            todo.text = action.payload.text
+            todo.text = action.payload.text;
           }
-          return todo
-        })
-      }
+          return todo;
+        }),
+      };
     }
     case TOGGLE_DONE: {
       return {
-        todos: state.todos.map(todo => {
+        todos: state.todos.map((todo) => {
           if (todo.id === action.payload) {
-            todo.done = !todo.done
+            todo.done = !todo.done;
           }
           return todo;
-        })
-      }
+        }),
+      };
     }
     default: {
-      return state
+      return state;
     }
   }
 };
